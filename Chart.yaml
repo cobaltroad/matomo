@@ -1,0 +1,17 @@
+apiVersion: v2
+appVersion: 4.3.1
+dependencies:
+- condition: mysql.enabled
+  name: mysql
+  repository: https://storage.googleapis.com/t3n-helm-charts/
+  version: ^0.1.0
+home: https://www.matomo.org/
+maintainers:
+- email: sjone441@ford.com
+  name: sethjones
+name: matomo
+sources:
+- https://github.com/matomo-org/matomo
+- https://github.com/matomo-org/docker
+type: application
+version: 1.0.4

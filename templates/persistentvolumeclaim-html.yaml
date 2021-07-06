@@ -1,0 +1,25 @@
+{{- if and .Values.persistence.enabled (not .Values.persistence.html.existingClaim) }}
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: {{ .Values.persistence.html.name }}
+  labels:
+    {{ include "matomo.labels" . | indent 4 | trim }}
+{{- with .Values.persistence.html.annotations }}
+  annotations:
+    {{ toYaml . | nindent 4 }}
+{{- end }}
+spec:
+  accessModes:
+    - {{ .Values.persistence.accessMode }}
+  resources:
+    requests:
+      storage: {{ .Values.persistence.html.size }}
+{{- if .Values.persistence.html.storageClass }}
+{{- if (eq "-" .Values.persistence.html.storageClass) }}
+  storageClassName: ""
+{{- else }}
+  storageClassName: {{ .Values.persistence.html.storageClass }}
+{{- end }}
+{{- end }}
+{{- end }}

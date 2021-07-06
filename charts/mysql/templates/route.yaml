@@ -1,0 +1,20 @@
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  annotations:
+    ingress.kubernetes.io/ssl-redirect: "false"
+    kubernetes.io/ingress.class: ford
+    openshift.io/host.generated: "true"
+  name: {{ .Release.Name }}
+spec:
+  host: {{ default .Release.Name .Values.route_name }}.apps.pd01.edc.caas.ford.com
+  port:
+    targetPort: http
+  tls:
+    insecureEdgeTerminationPolicy: Redirect
+    termination: edge
+  to:
+    kind: Service
+    name: {{ .Release.Name }}
+    weight: 100
+  wildcardPolicy: None
